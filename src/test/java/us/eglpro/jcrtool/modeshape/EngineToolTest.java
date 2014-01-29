@@ -4,7 +4,9 @@ import static org.junit.Assert.*;
 
 import java.io.FileNotFoundException;
 
+import javax.jcr.Node;
 import javax.jcr.RepositoryException;
+import javax.jcr.Session;
 
 import org.infinispan.schematic.document.ParsingException;
 import org.junit.After;
@@ -56,6 +58,7 @@ public class EngineToolTest {
 	@Test
 	public void testMain() {
 		JcrRepository r = null;
+		Session session = null;
 		try {
 			tool.loadConfig(TEST_CONFIG);
 		} catch (ParsingException e1) {
@@ -78,12 +81,19 @@ public class EngineToolTest {
 
 		try {
 			// NOTE: The respository isn't created on the filesystem, until here:
-			javax.jcr.Session session = r.login(TEST_WORKSPACE_NAME);
+			session = r.login(TEST_WORKSPACE_NAME);
 		} catch (RepositoryException e) {
 			e.printStackTrace();
 			fail("Login - RepositoryException");
 		}
-		 
+		Node root = null;
+		try {
+			root = session.getRootNode();
+		} catch (RepositoryException e) {
+			e.printStackTrace();
+			fail("Root Node - RepositoryException");
+		}
+		assertNotNull(root);
 
 	}
 
