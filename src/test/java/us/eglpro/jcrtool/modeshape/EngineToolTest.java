@@ -1,7 +1,6 @@
 package us.eglpro.jcrtool.modeshape;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
 import java.io.FileNotFoundException;
 import java.util.concurrent.Future;
@@ -53,14 +52,16 @@ public class EngineToolTest {
 		try {
 			tool.loadConfig(TEST_CONFIG);
 			Problems p = tool.validateConfig();
+			assertFalse("Config - Errors in configuration", p.hasErrors());
+			assertFalse("Config - Warnings in configuration", p.hasWarnings());
 		} catch (ParsingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			fail("ParsingException");
+			fail("Config - ParsingException");
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			fail("FileNotFoundException");
+			fail("Config - FileNotFoundException");
 		}
 	}
 
