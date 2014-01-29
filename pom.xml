@@ -6,7 +6,14 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<name>JCR Utility Classes, ModeShape Edition</name>
 	<url>https://github.com/eglpro/jcrtool-modeshape</url>
-	<organization>EGLPRO</organization>
+	<organization>
+		EGLPRO
+	</organization>
+	<scm>
+		<url>https://github.com/eglpro/jcrtool-modeshape</url>
+		<connection>scm:git:https://github.com/eglpro/jcrtool-modeshape.git</connection>
+		<developerConnection>scm:git:git@github.com:eglpro/jcrtool-modeshape.git</developerConnection>
+	</scm>
 
 	<dependencies>
 		<dependency>
