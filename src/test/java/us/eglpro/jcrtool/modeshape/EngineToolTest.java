@@ -1,15 +1,15 @@
 package us.eglpro.jcrtool.modeshape;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.fail;
 
-import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.concurrent.Future;
 
 import javax.jcr.Node;
 import javax.jcr.RepositoryException;
 import javax.jcr.Session;
 
-import org.apache.commons.io.FileUtils;
 import org.infinispan.schematic.document.ParsingException;
 import org.junit.After;
 import org.junit.Before;
@@ -18,12 +18,15 @@ import org.modeshape.common.collection.Problems;
 import org.modeshape.jcr.ConfigurationException;
 import org.modeshape.jcr.JcrRepository;
 import org.modeshape.jcr.ModeShapeEngine;
+import org.modeshape.jcr.ModeShapeEngine.State;
 
 public class EngineToolTest {
 
 	public static final String TEST_CONFIG = "src/test/resources/testRepository.json";
 	public static final String TEST_WORKSPACE_NAME = "defaultWorkspace";
-	public static final String TEST_REPO_LOC = "target/modeshape/";	
+	public static final String TEST_REPO_LOC = "target/modeshape/";
+	public static final String TEST_REPO_NAME = "testRepository";
+
 	protected String[] args;
 	protected EngineTool tool;
 
@@ -35,12 +38,14 @@ public class EngineToolTest {
 	@After
 	public void tearDown() throws Exception {
 		ModeShapeEngine eng = tool.getEngine();
-		if( eng != null) {
-			eng.shutdown();
-			// delete repository files, to prevent later locking errors
-			FileUtils.deleteDirectory(new File(TEST_REPO_LOC));
+		if (eng != null) {
+			if (eng.getState() != State.NOT_RUNNING) {
+				Future<Boolean> future = eng.undeploy(TEST_REPO_NAME);
+				future.get();
+			}
+			System.out.println("Repository is undeployed");
 		}
-		
+
 	}
 
 	@Test
@@ -84,7 +89,8 @@ public class EngineToolTest {
 		}
 
 		try {
-			// NOTE: The respository isn't created on the filesystem, until here:
+			// NOTE: The respository isn't created on the filesystem, until
+			// here:
 			session = r.login(TEST_WORKSPACE_NAME);
 		} catch (RepositoryException e) {
 			e.printStackTrace();
