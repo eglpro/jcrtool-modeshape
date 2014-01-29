@@ -5,6 +5,8 @@
 	<artifactId>jcrtool-modeshape</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>JCR Utility Classes, ModeShape Edition</name>
+	<url>https://github.com/eglpro/jcrtool-modeshape</url>
+	<organization>EGLPRO</organization>
 
 	<dependencies>
 		<dependency>
