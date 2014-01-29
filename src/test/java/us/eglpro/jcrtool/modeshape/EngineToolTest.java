@@ -12,11 +12,15 @@ import org.junit.Before;
 import org.junit.Test;
 import org.modeshape.common.collection.Problems;
 import org.modeshape.jcr.ConfigurationException;
+import org.modeshape.jcr.JcrRepository;
+import org.modeshape.jcr.ModeShapeEngine;
 
 public class EngineToolTest {
 
 	public static final String TEST_CONFIG = "src/test/resources/testRepository.json";
-
+	public static final String TEST_WORKSPACE_NAME = "defaultWorkspace";
+	
+	
 	protected String[] args;
 	protected EngineTool tool;
 
@@ -27,6 +31,10 @@ public class EngineToolTest {
 
 	@After
 	public void tearDown() throws Exception {
+		ModeShapeEngine eng = tool.getEngine();
+		if( eng != null) {
+			eng.shutdown();
+		}
 	}
 
 	@Test
@@ -47,6 +55,7 @@ public class EngineToolTest {
 
 	@Test
 	public void testMain() {
+		JcrRepository r = null;
 		try {
 			tool.loadConfig(TEST_CONFIG);
 		} catch (ParsingException e1) {
@@ -58,7 +67,7 @@ public class EngineToolTest {
 		}
 		tool.startEngine();
 		try {
-			tool.deployEngine();
+			r = tool.deployEngine();
 		} catch (ConfigurationException e) {
 			e.printStackTrace();
 			fail("Deploy - ConfigurationException");
@@ -66,6 +75,15 @@ public class EngineToolTest {
 			e.printStackTrace();
 			fail("Deploy - RepositoryException");
 		}
+
+		try {
+			// NOTE: The respository isn't created on the filesystem, until here:
+			javax.jcr.Session session = r.login(TEST_WORKSPACE_NAME);
+		} catch (RepositoryException e) {
+			e.printStackTrace();
+			fail("Login - RepositoryException");
+		}
+		 
 
 	}
 

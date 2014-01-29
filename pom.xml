@@ -30,6 +30,10 @@
 			<groupId>org.modeshape</groupId>
 			<artifactId>modeshape-jcr-api</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>org.modeshape</groupId>
+			<artifactId>modeshape-sequencer-xsd</artifactId>
+		</dependency>
 	</dependencies>
 
 	<dependencyManagement>
@@ -38,10 +42,25 @@
 			<dependency>
 				<groupId>org.modeshape.bom</groupId>
 				<artifactId>modeshape-bom-embedded</artifactId>
-				<version>3.7.0.Final</version>
+				<version>3.7.1.Final</version>
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
+
+	<repositories>
+		<repository>
+			<!-- needed for ecore dep in xsd indexer -->
+			<id>jboss</id>
+			<url>https://repository.jboss.org/nexus/content/repositories/thirdparty-releases</url>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+			<releases>
+				<enabled>true</enabled>
+				<checksumPolicy>fail</checksumPolicy>
+			</releases>
+		</repository>
+	</repositories>
 </project>

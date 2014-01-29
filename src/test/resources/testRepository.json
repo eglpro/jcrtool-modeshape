@@ -27,7 +27,8 @@
     },
     "sequencing" : {
         "removeDerivedContentWithOriginal" : true,
-        "sequencers" : {
+        "threadPool" : "modeshape-workers",
+        "sequencers" : { 	
         	"xsdSequencer" : {
              "classname" : "xsd",
              "pathExpressions" : [ "/(*.xsd)/jcr:content[@jcr:data]" ]
