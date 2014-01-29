@@ -30,12 +30,12 @@ public class EngineToolTest {
 	protected EngineTool tool;
 
 	@Before
-	public void setUp() throws Exception {
+	public void setUpBeforeClass() throws Exception {
 		tool = new EngineTool();
 	}
 
 	@After
-	public void tearDown() throws Exception {
+	public void tearDownAfterClass() throws Exception {
 		ModeShapeEngine eng = tool.getEngine();
 		if (eng != null) {
 			if (eng.getState() != State.NOT_RUNNING) {
