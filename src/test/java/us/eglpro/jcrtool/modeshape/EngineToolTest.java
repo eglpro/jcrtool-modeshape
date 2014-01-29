@@ -2,12 +2,14 @@ package us.eglpro.jcrtool.modeshape;
 
 import static org.junit.Assert.*;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 
 import javax.jcr.Node;
 import javax.jcr.RepositoryException;
 import javax.jcr.Session;
 
+import org.apache.commons.io.FileUtils;
 import org.infinispan.schematic.document.ParsingException;
 import org.junit.After;
 import org.junit.Before;
@@ -21,8 +23,7 @@ public class EngineToolTest {
 
 	public static final String TEST_CONFIG = "src/test/resources/testRepository.json";
 	public static final String TEST_WORKSPACE_NAME = "defaultWorkspace";
-	
-	
+	public static final String TEST_REPO_LOC = "target/modeshape/";	
 	protected String[] args;
 	protected EngineTool tool;
 
@@ -36,7 +37,10 @@ public class EngineToolTest {
 		ModeShapeEngine eng = tool.getEngine();
 		if( eng != null) {
 			eng.shutdown();
+			// delete repository files, to prevent later locking errors
+			FileUtils.deleteDirectory(new File(TEST_REPO_LOC));
 		}
+		
 	}
 
 	@Test
