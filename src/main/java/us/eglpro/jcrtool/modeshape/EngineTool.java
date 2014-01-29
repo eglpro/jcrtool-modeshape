@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import javax.jcr.RepositoryException;
 
 import org.infinispan.schematic.document.ParsingException;
+import org.modeshape.common.collection.Problems;
 import org.modeshape.jcr.ConfigurationException;
 import org.modeshape.jcr.JcrRepository;
 import org.modeshape.jcr.ModeShapeEngine;
@@ -94,7 +95,7 @@ public class EngineTool {
 	 * @see {@link RepositoryConfiguration#validate()},
 	 *      {@link RepositoryConfiguration#validate(org.infinispan.schematic.document.Changes)}
 	 */
-	public org.modeshape.common.collection.Problems validateConfig() {
+	public Problems validateConfig() {
 		return config.validate();
 	}
 

@@ -12,14 +12,15 @@
     	"binaryStorage" : {
             "minimumBinarySizeInBytes" : 4096,
             "minimumStringSize" : 4096,
-            "type" : "file"
+            "type" : "file",
+            "directory" : "target/modeshape/binary"
         }    	
     },
      "query" : {
         "enabled" : true,
         "indexStorage" : {
             "type" : "filesystem",
-            "location" : "target/modeshape/",
+            "location" : "target/modeshape/query",
             "lockingStrategy" : "simple",
             "fileSystemAccessType" : "auto"
         }
@@ -27,9 +28,10 @@
     "sequencing" : {
         "removeDerivedContentWithOriginal" : true,
         "sequencers" : {
-        	 "name" : "XSD sequencer",
+        	"xsdSequencer" : {
              "classname" : "xsd",
              "pathExpressions" : [ "/(*.xsd)/jcr:content[@jcr:data]" ]
+        	}
         }
     }    
 }
