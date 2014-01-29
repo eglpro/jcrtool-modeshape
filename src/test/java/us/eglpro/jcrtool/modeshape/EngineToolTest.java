@@ -98,6 +98,7 @@ public class EngineToolTest {
 			fail("Root Node - RepositoryException");
 		}
 		assertNotNull(root);
+		session.logout();
 
 	}
 
