@@ -1,0 +1,35 @@
+{
+	"name" : "testRepository",
+	"jndiName" : "jcr/testRepository",
+	"monitoring" : {
+        "enabled" : true
+    },
+    "workspaces" : {
+        "default" : "defaultWorkspace",
+        "allowCreation" : true
+    },
+    "storage" : {
+    	"binaryStorage" : {
+            "minimumBinarySizeInBytes" : 4096,
+            "minimumStringSize" : 4096,
+            "type" : "file"
+        }    	
+    },
+     "query" : {
+        "enabled" : true,
+        "indexStorage" : {
+            "type" : "filesystem",
+            "location" : "target/modeshape/",
+            "lockingStrategy" : "simple",
+            "fileSystemAccessType" : "auto"
+        }
+    },
+    "sequencing" : {
+        "removeDerivedContentWithOriginal" : true,
+        "sequencers" : {
+        	 "name" : "XSD sequencer",
+             "classname" : "xsd",
+             "pathExpressions" : [ "/(*.xsd)/jcr:content[@jcr:data]" ]
+        }
+    }    
+}

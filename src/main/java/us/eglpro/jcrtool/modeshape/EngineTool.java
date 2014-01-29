@@ -17,10 +17,20 @@ public class EngineTool {
 	protected RepositoryConfiguration config;
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		// FIXME: Parse command line args for selecting config file
+		// FIXME: Parse command line args for additional options
+		String configPath = args[0];
 		EngineTool eng = new EngineTool();
-		eng.startEngine();
+		try {
+			eng.loadConfig(configPath);
+			eng.startEngine();
+		} catch (ParsingException e) {
+			e.printStackTrace();
+			System.exit(1);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+			System.exit(2);
+		}
+		
 	}
 
 	public EngineTool() {
